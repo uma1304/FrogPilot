@@ -58,9 +58,11 @@ class FrogPilotPlanner:
 
     self.frogpilot_acceleration.update(frogpilotCarState, v_ego, frogpilot_toggles)
 
-    run_cem = frogpilot_toggles.conditional_experimental_mode or frogpilot_toggles.force_stops or frogpilot_toggles.green_light_alert or frogpilot_toggles.show_stopping_point
-    if run_cem and (controlsState.enabled or frogpilotCarControl.alwaysOnLateralActive) and carState.gearShifter not in NON_DRIVING_GEARS:
+    if frogpilot_toggles.conditional_experimental_mode and controlsState.enabled and carState.gearShifter not in NON_DRIVING_GEARS:
       self.cem.update(carState, frogpilotCarState, frogpilotNavigation, v_ego, v_lead, frogpilot_toggles)
+    elif frogpilot_toggles.force_stops or frogpilot_toggles.green_light_alert or frogpilot_toggles.show_stopping_point:
+      self.cem.curve_detected = False
+      self.cem.stop_sign_and_light(frogpilotCarState, v_ego, frogpilot_toggles)
     else:
       self.cem.stop_light_detected = False
 
@@ -110,7 +112,9 @@ class FrogPilotPlanner:
     frogpilotPlan.tFollow = float(self.frogpilot_following.t_follow)
 
     frogpilotPlan.mtscSpeed = float(self.frogpilot_vcruise.mtsc_target)
-    frogpilotPlan.vtscControllingCurve = bool(self.frogpilot_vcruise.mtsc_target > self.frogpilot_vcruise.vtsc_target)
+    frogpilotPlan.stscControllingCurve = bool(self.frogpilot_vcruise.stsc_target < min(self.frogpilot_vcruise.mtsc_target, self.frogpilot_vcruise.vtsc_target))
+    frogpilotPlan.stscSpeed = float(self.frogpilot_vcruise.stsc_target)
+    frogpilotPlan.vtscControllingCurve = bool(self.frogpilot_vcruise.vtsc_target < min(self.frogpilot_vcruise.mtsc_target, self.frogpilot_vcruise.stsc_target))
     frogpilotPlan.vtscSpeed = float(self.frogpilot_vcruise.vtsc_target)
 
     frogpilotPlan.desiredFollowDistance = self.frogpilot_following.desired_follow_distance
