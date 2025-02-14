@@ -479,6 +479,8 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"SpeedLimitAccepted", CLEAR_ON_MANAGER_START},
     {"SpeedLimitChangedAlert", PERSISTENT},
     {"SpeedLimitController", PERSISTENT},
+    {"SpeedLimits", PERSISTENT},
+    {"SpeedLimitsFiltered", PERSISTENT},
     {"SpeedLimitSources", PERSISTENT},
     {"StandardFollow", PERSISTENT},
     {"StandardJerkAcceleration", PERSISTENT},
