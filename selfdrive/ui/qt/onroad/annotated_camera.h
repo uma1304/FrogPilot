@@ -138,6 +138,8 @@ private:
   bool slcOverridden;
   bool speedLimitChanged;
   bool speedLimitSources;
+  bool stscControllingCurve;
+  bool stscEnabled;
   bool trafficModeActive;
   bool turnSignalAnimation;
   bool turnSignalLeft;
@@ -157,6 +159,7 @@ private:
   float slcSpeedLimitOffset;
   float speedConversion;
   float speedConversionMetrics;
+  float stscSpeed;
   float unconfirmedSpeedLimit;
   float upcomingSpeedLimit;
   float vtscSpeed;
