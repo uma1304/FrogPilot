@@ -74,6 +74,7 @@ private:
 
   // FrogPilot widgets
   void drawCEMStatus(QPainter &p);
+  void drawRadarTracks(QPainter &p);
   void drawRoadName(QPainter &p);
   void drawTurnSignals(QPainter &p);
   void initializeFrogPilotWidgets();

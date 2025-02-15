@@ -89,6 +89,10 @@ const QColor bg_colors [] = {
 };
 
 
+struct RadarTrackData {
+  QPointF calibrated_point;
+};
+
 typedef struct UIScene {
   bool calibration_valid = false;
   bool calibration_wide_valid  = false;
@@ -264,6 +268,8 @@ typedef struct UIScene {
 
   std::string speed_limit_source;
 
+  std::vector<RadarTrackData> live_radar_tracks;
+
   QColor lane_lines_color;
   QColor lead_marker_color;
   QColor path_color;
@@ -384,3 +390,4 @@ void update_line_data(const UIState *s, const cereal::XYZTData::Reader &line,
 // FrogPilot functions
 void ui_update_frogpilot_params(UIState *s);
 void ui_update_theme(UIState *s);
+void update_radar_tracks(UIState *s, const capnp::List<cereal::LiveTracks>::Reader &tracks_msg, const cereal::XYZTData::Reader &line);
